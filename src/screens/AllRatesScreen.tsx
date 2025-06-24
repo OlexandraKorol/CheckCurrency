@@ -5,7 +5,7 @@ import { CurrencyListItem } from "../components/CurrencyListItem";
 
 import { useExchangeRates } from "../store/exchangeRates";
 import { useFavorites } from "../store/addFavorities";
-import { BaseCurrency, LoadingComponent, NoInternetMessage } from "../components/MessagesComponents";
+import { BaseCurrency, LoadingComponent, NoInternetMessage, NothingFoundComponent } from "../components/MessagesComponents";
 import { CustomInput } from "../components/CustomInput";
 import { useNetwork } from "../hoop/useNetwork";
 
@@ -59,7 +59,7 @@ export const AllRatesScreen = () => {
                 value={value}
                 onPress={() => toggleFavorite(code)} />
             )}
-            ListEmptyComponent={<Text style={{ padding: 20, textAlign: 'center' }}>nothing found</Text>} />
+            ListEmptyComponent={<NothingFoundComponent />} />
         </>
       )
         : (<NoInternetMessage />)}

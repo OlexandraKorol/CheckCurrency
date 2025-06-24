@@ -23,9 +23,22 @@ export const LoadingComponent = () => {
   )
 }
 
+export const NothingFoundComponent = () => {
+  return (
+    <View style={styles.containersForFlatList}>
+      <Text variant="bodyLarge" style={{padding: 15}}>Nothing found, try again!</Text>
+      <Icon
+        source="border-color"
+        color={MD3Colors.primary50}
+        size={20}
+      />
+    </View>
+  )
+}
+
 export const FavoriteEmptyComponent = () => {
   return (
-    <View style={styles.favoriteEmptyContainer}>
+    <View style={styles.containersForFlatList}>
       <Text variant="headlineSmall" style={styles.favEmptyHeader}>Looks like there's nothing to show here...</Text>
       <Text variant="bodyLarge" style={styles.favEmptySubheader}>Go back to the previous screen and try adding a few currencies!</Text>
     </View>
@@ -70,8 +83,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  favoriteEmptyContainer: {
-    margin: 30
+  containersForFlatList: {
+    margin: 30,
+    alignItems: 'center'
   },
   favEmptyHeader: {
     paddingBottom: 40,
