@@ -1,5 +1,6 @@
 import { StyleSheet, View } from "react-native"
 import { Icon, MD3Colors, Text } from 'react-native-paper';
+import { fetchExchangeRates } from "../api/fixerApi";
 
 export const AllRatesScreenOption = {
   tabBarIcon: () => (
@@ -15,6 +16,7 @@ export const AllRatesScreenOption = {
 }
 
 export const AllRatesScreen = () => {
+  fetchExchangeRates()
 
   return (
     <View style={styles.container}>

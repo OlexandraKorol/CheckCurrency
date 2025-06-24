@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native"
 import { MD3Colors, Icon, Text } from "react-native-paper"
 
+
 export const FavoritesScreenOption = {
   tabBarIcon: () => (
     <Icon
