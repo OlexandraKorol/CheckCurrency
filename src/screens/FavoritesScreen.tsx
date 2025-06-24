@@ -1,6 +1,10 @@
-import { Icon, MD3Colors } from "react-native-paper";
+import { FlatList, StyleSheet, View } from "react-native"
+import { MD3Colors, Icon } from "react-native-paper"
+import { CurrencyListItem } from "../components/CurrencyListItem";
+import { useExchangeRates } from "../store/exchangeRates";
+import { useFavorites } from "../store/addFavorities";
 import { FavoriteEmptyComponent } from "../components/MessagesComponents";
-import { StyleSheet, View } from "react-native";
+import { useEffect } from "react";
 
 
 export const FavoritesScreenOption = {
@@ -18,9 +22,33 @@ export const FavoritesScreenOption = {
 
 
 export const FavoritesScreen = () => {
+  const { rates, fetchRates } = useExchangeRates();
+  const { favorites, isFavorite, toggleFavorite, loadFavorites } = useFavorites();
+
+  useEffect(() => {
+    fetchRates();
+    loadFavorites();
+  }, []);
+
+  const favoriteRates = rates.filter(([currency]) =>
+    favorites.includes(currency)
+  );
+
   return (
     <View style={styles.container}>
-      <FavoriteEmptyComponent />
+
+      <FlatList
+        data={favoriteRates}
+        keyExtractor={([code]) => code}
+        renderItem={({ item: [code, value] }) => (
+          <CurrencyListItem
+            isFavorite={isFavorite(code)}
+            code={code}
+            value={value}
+            onPress={() => toggleFavorite(code)} />
+        )}
+        ListEmptyComponent={FavoriteEmptyComponent}
+      />
     </View>
   );
 };
