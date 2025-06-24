@@ -1,5 +1,8 @@
-import { StyleSheet, View } from "react-native"
-import { MD3Colors, Text } from "react-native-paper"
+import { useNavigation } from "@react-navigation/native"
+import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from "react-native"
+import { Icon, MD3Colors, Text } from "react-native-paper"
+import { BottomTabNavigationRef } from "../navigation/common"
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 
 export const BaseCurrency = ({ baseCurency }: { baseCurency: string }) => {
@@ -11,11 +14,45 @@ export const BaseCurrency = ({ baseCurency }: { baseCurency: string }) => {
   )
 }
 
+export const LoadingComponent = () => {
+  return (
+    <View style={styles.fullScreenContainer}>
+      <Text variant="headlineSmall" style={{ paddingBottom: 40 }}>Sorry, data is loading...</Text>
+      <ActivityIndicator animating={true} />
+    </View>
+  )
+}
+
 export const FavoriteEmptyComponent = () => {
   return (
     <View style={styles.favoriteEmptyContainer}>
       <Text variant="headlineSmall" style={styles.favEmptyHeader}>Looks like there's nothing to show here...</Text>
       <Text variant="bodyLarge" style={styles.favEmptySubheader}>Go back to the previous screen and try adding a few currencies!</Text>
+    </View>
+  )
+}
+
+
+export const NoInternetMessage = () => {
+  const navigation = useNavigation<BottomTabNavigationProp<BottomTabNavigationRef>>();
+  return (
+    <View style={styles.fullScreenContainer}>
+      <Text variant="headlineMedium" style={styles.noInternetMessage}>It looks like there are Internet connection issues</Text>
+      <Icon
+        source="emoticon-confused-outline"
+        color={MD3Colors.primary50}
+        size={30}
+      />
+
+      <Text style={styles.noInternetMessage} variant="bodyLarge">
+        But you can still view your saved currencies in the tab!
+      </Text>
+
+      <TouchableOpacity onPress={() => navigation.navigate('Favorites')}>
+        <Text style={styles.noInternetNavButton} variant="bodyLarge" >
+          Check saved items
+        </Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -44,4 +81,12 @@ const styles = StyleSheet.create({
     color: MD3Colors.neutral60,
     textAlign: 'center'
   },
+  noInternetMessage: {
+    paddingVertical: 30,
+    color: MD3Colors.primary50,
+    textAlign: 'center'
+  },
+  noInternetNavButton: {
+    color: MD3Colors.neutral50,
+  }
 })

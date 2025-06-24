@@ -5,7 +5,8 @@ import { CurrencyListItem } from "../components/CurrencyListItem";
 
 import { useExchangeRates } from "../store/exchangeRates";
 import { useFavorites } from "../store/addFavorities";
-import { BaseCurrency } from "../components/MessagesComponents";
+import { BaseCurrency, LoadingComponent, NoInternetMessage } from "../components/MessagesComponents";
+import { useNetwork } from "../hoop/useNetwork";
 
 export const AllRatesScreenOption = {
   tabBarIcon: () => (
@@ -23,28 +24,35 @@ export const AllRatesScreenOption = {
 export const AllRatesScreen = () => {
   const { rates, fetchRates, baseCurency } = useExchangeRates();
   const { toggleFavorite, isFavorite } = useFavorites();
+  const { isConnected } = useNetwork();
 
 
   useEffect(() => {
     fetchRates();
   }, []);
 
+
   return (
     <View style={styles.container}>
       <StatusBar />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={<BaseCurrency baseCurency={baseCurency} />}
-        data={rates}
-        keyExtractor={([code]) => code}
-        renderItem={({ item: [code, value] }) => (
-          <CurrencyListItem
-            isFavorite={isFavorite(code)}
-            code={code}
-            value={value}
-            onPress={() => toggleFavorite(code)} />
-        )}
-        ListEmptyComponent={<Text style={{ padding: 20, textAlign: 'center' }}>nothing found</Text>} />
+      {isConnected ? (
+
+
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={<BaseCurrency baseCurency={baseCurency} />}
+          data={rates}
+          keyExtractor={([code]) => code}
+          renderItem={({ item: [code, value] }) => (
+            <CurrencyListItem
+              isFavorite={isFavorite(code)}
+              code={code}
+              value={value}
+              onPress={() => toggleFavorite(code)} />
+          )}
+          ListEmptyComponent={<Text style={{ padding: 20, textAlign: 'center' }}>nothing found</Text>} />
+      )
+        : (<NoInternetMessage />)}
 
     </View>
   )
