@@ -1,20 +1,40 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { Icon, MD3Colors } from "react-native-paper";
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+function AllRatesScreen() {
+  return <Text>AllRates</Text>;
+}
+
+function FavoritesScreen() {
+  return (
+  <>
+  <Icon
+      source="heart-outline"
+      color={MD3Colors.primary50}
+      size={20}
+    />
+  
+  <Text>Favorites</Text>
+  </>
+  );
+}
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const Tab = createBottomTabNavigator();
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
+
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="AllRates" component={AllRatesScreen} />
+          <Tab.Screen name="Favorites" component={FavoritesScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+
     </View>
   );
 }
