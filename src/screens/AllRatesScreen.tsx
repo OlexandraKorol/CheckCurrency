@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StatusBar, StyleSheet, View } from "react-native"
-import { Icon, MD3Colors, Text, TextInput } from 'react-native-paper';
+import { FlatList, StatusBar, StyleSheet, View } from "react-native"
+import { Icon, MD3Colors, Text } from 'react-native-paper';
 import { CurrencyListItem } from "../components/CurrencyListItem";
 
 import { useExchangeRates } from "../store/exchangeRates";
 import { useFavorites } from "../store/addFavorities";
 import { BaseCurrency, LoadingComponent, NoInternetMessage } from "../components/MessagesComponents";
+import { CustomInput } from "../components/CustomInput";
 import { useNetwork } from "../hoop/useNetwork";
 
 export const AllRatesScreenOption = {
@@ -22,35 +23,44 @@ export const AllRatesScreenOption = {
 }
 
 export const AllRatesScreen = () => {
-  const { rates, fetchRates, baseCurency } = useExchangeRates();
+  const { rates, loading, fetchRates, baseCurency } = useExchangeRates();
   const { toggleFavorite, isFavorite } = useFavorites();
   const { isConnected } = useNetwork();
 
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     fetchRates();
   }, []);
 
+  const filteredRates = rates.filter(([code]) =>
+    code.toLowerCase().includes(search.toLowerCase())
+  );
 
+  if (loading) return <LoadingComponent />;
+  //TODO: NOTHING FOUND COMPONENT
   return (
     <View style={styles.container}>
       <StatusBar />
       {isConnected ? (
-
-
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={<BaseCurrency baseCurency={baseCurency} />}
-          data={rates}
-          keyExtractor={([code]) => code}
-          renderItem={({ item: [code, value] }) => (
-            <CurrencyListItem
-              isFavorite={isFavorite(code)}
-              code={code}
-              value={value}
-              onPress={() => toggleFavorite(code)} />
-          )}
-          ListEmptyComponent={<Text style={{ padding: 20, textAlign: 'center' }}>nothing found</Text>} />
+        <>
+          <CustomInput
+            value={search}
+            onChangeText={setSearch} />
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={<BaseCurrency baseCurency={baseCurency} />}
+            data={filteredRates}
+            keyExtractor={([code]) => code}
+            renderItem={({ item: [code, value] }) => (
+              <CurrencyListItem
+                isFavorite={isFavorite(code)}
+                code={code}
+                value={value}
+                onPress={() => toggleFavorite(code)} />
+            )}
+            ListEmptyComponent={<Text style={{ padding: 20, textAlign: 'center' }}>nothing found</Text>} />
+        </>
       )
         : (<NoInternetMessage />)}
 
