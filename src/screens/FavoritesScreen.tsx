@@ -1,5 +1,6 @@
-import { StyleSheet, View } from "react-native"
-import { MD3Colors, Icon, Text } from "react-native-paper"
+import { Icon, MD3Colors } from "react-native-paper";
+import { FavoriteEmptyComponent } from "../components/MessagesComponents";
+import { StyleSheet, View } from "react-native";
 
 
 export const FavoritesScreenOption = {
@@ -17,12 +18,9 @@ export const FavoritesScreenOption = {
 
 
 export const FavoritesScreen = () => {
-
-
   return (
     <View style={styles.container}>
-
-      <Text>FavoritesScreen</Text>
+      <FavoriteEmptyComponent />
     </View>
   );
 };

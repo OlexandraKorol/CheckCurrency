@@ -1,6 +1,8 @@
-import { StyleSheet, View } from "react-native"
-import { Icon, MD3Colors, Text } from 'react-native-paper';
-import { fetchExchangeRates } from "../api/fixerApi";
+import { StatusBar, StyleSheet, View } from "react-native"
+import { Icon, MD3Colors } from 'react-native-paper';
+import { CurrencyListItem } from "../components/CurrencyListItem";
+import { BaseCurrency } from "../components/MessagesComponents";
+
 
 export const AllRatesScreenOption = {
   tabBarIcon: () => (
@@ -16,13 +18,17 @@ export const AllRatesScreenOption = {
 }
 
 export const AllRatesScreen = () => {
-  fetchExchangeRates()
-
   return (
     <View style={styles.container}>
-      <Text>
-        AllRatesScreen
-      </Text>
+      <StatusBar />
+
+      <BaseCurrency baseCurency={"UAN"} />
+
+      <CurrencyListItem
+        isFavorite={true}
+        code={"UAN"}
+        value={40}
+        onPress={() => console.log("press")} />
     </View>
   )
 }
@@ -33,5 +39,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: MD3Colors.primary95
   },
-
+  headerComponent: {
+    marginTop: 30,
+    justifyContent: 'space-between',
+    width: '100%',
+    flexDirection: 'row'
+  }
 })
