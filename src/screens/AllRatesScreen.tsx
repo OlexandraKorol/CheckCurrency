@@ -7,7 +7,8 @@ import { useExchangeRates } from "../store/exchangeRates";
 import { useFavorites } from "../store/addFavorities";
 import { BaseCurrency, LoadingComponent, NoInternetMessage, NothingFoundComponent } from "../components/MessagesComponents";
 import { CustomInput } from "../components/CustomInput";
-import { useNetwork } from "../hoop/useNetwork";
+import { useNetwork } from "../hook/useNetwork";
+
 
 export const AllRatesScreenOption = {
   tabBarIcon: () => (
@@ -17,7 +18,7 @@ export const AllRatesScreenOption = {
       size={20}
     />
   ),
-  tabBarLabel: 'All curency',
+  tabBarLabel: 'All currencies',
   title: 'Exchange rates',
   headerTintColor: MD3Colors.primary50
 }

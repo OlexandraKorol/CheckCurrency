@@ -1,97 +1,159 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# CheckCurrency App
 
-# Getting Started
+This mobile app provides up-to-date currency exchange rates, lets users save favorites, and supports offline access to previously viewed data.
+## Getting Started
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+### Installation and Setup
 
-## Step 1: Start Metro
+1. **Clone the repository:**
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+   ```bash
+   git clone https://github.com/OlexandraKorol/CheckCurrency
+   cd CheckCurrency
+   ```
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+2. **Install dependencies:**
+   ```
+   yarn install
+   ```
 
-```sh
-# Using npm
-npm start
+3. **Set up the API key:**
+   Add a `.env` file in the project root 
 
-# OR using Yarn
-yarn start
-```
+4. **Start the Metro Bundler:**
 
-## Step 2: Build and run your app
+   ```bash
+   npm start
+   ```
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+---
 
-### Android
+### Running on Android
 
-```sh
-# Using npm
-npm run android
+1. Launch the Android emulator via Android Studio or connect a physical device (make sure Developer Mode and USB debugging are enabled).
 
-# OR using Yarn
-yarn android
-```
+2. Run the app:
 
-### iOS
+   ```bash
+   npx react-native run-android
+   ```
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+3. The app will build and launch on your emulator or device.
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+---
 
-```sh
-bundle install
-```
+### Running on iOS
 
-Then, and every time you update your native dependencies, run:
+1. Install native dependencies using CocoaPods:
 
-```sh
-bundle exec pod install
-```
+   ```bash
+   cd ios && pod install && cd ..
+   ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+2. Launch the iOS simulator or connect a physical device.
 
-```sh
-# Using npm
-npm run ios
+3. Run the app:
 
-# OR using Yarn
-yarn ios
-```
+   ```bash
+   npx react-native run-ios
+   ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Functionality
 
-## Step 3: Modify your app
+1. **Two screens with Bottom Navigation**
 
-Now that you have successfully run the app, let's make changes!
+   The app has two main screens accessible via bottom navigation:
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+   * `AllRatesScreen` — displays the full list of currencies
+   * `FavoritesScreen` — displays the list of favorited currencies
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+2. **AllRatesScreen (All currencies)**
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+   This screen shows the complete list of exchange rates fetched from the API.
+   A search field allows filtering currencies by code or name.
 
-## Congratulations! :tada:
+3. **FavoritesCurrency Screen (Favorite)**
 
-You've successfully run and modified your React Native App. :partying_face:
+   Displays only the currencies that the user has added to their favorites.
+   Users can remove currencies from favorites directly on this screen.
 
-### Now what?
+4. **Adding/removing favorites**
+   On both screens, each currency has a button (heart icon) to add or remove it from favorites.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+5. **Offline mode**
+   Exchange rates and favorites are cached locally using AsyncStorage.
+   When there is no internet connection, the app displays the last loaded rates and favorite currencies.
 
-# Troubleshooting
+## Tecnologies and Libraries
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+### Fixer.io
+Free and simple API used to fetch real-time currency exchange rates. Acts as the data source for all exchange rate information in the app.
+### Zustant
+Lightweight and minimal state management library. Very simple to set up and use — ideal for small to medium-sized apps like this one. Helps manage app state without boilerplate.
 
-# Learn More
+### React Native Async Storage
+Local storage system for persisting key-value pairs. Used here to cache exchange rates and user favorites for offline access.
+### @react-native-community/netinfo
+Library to monitor network connectivity. Used to detect online/offline mode and conditionally render content based on connection status.
 
-To learn more about React Native, take a look at the following resources:
+## Architecture and structure 
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+![project structure](./src/assets/image.png)
+
+### Navigation
+
+- Built with `BottomTabNavigator`
+- Two main screens:
+  - `AllRatesScreen` – displays all exchange rates
+  - `FavoritesScreen` – shows user-selected favorites
+
+
+### Data Flow
+
+- Exchange rates fetched from **Fixer API**
+- Cached locally via **AsyncStorage** for offline access
+
+### State Management
+
+- `useExchangeRates` – fetches and stores exchange rates
+- `useFavorites` – manages favorite currencies with persistence
+
+
+## Design Choice
+Used [react-native-paper](https://callstack.github.io/react-native-paper/) — a UI library designed specifically for React Native.
+
+Reasons for using:
+
+1. Comes with built-in components (buttons, cards, lists, etc.)
+2. Supports Material Design out of the box
+3. Includes icon support, default fonts, and color palette
+4. Helps build consistent UI faster
+5. Reduces the need to write common UI elements from scratch
+6. Well-documented and developer-friendly — reduces time spent on UI tweaks
+7. Helps keep the design consistent across platforms without additional styling tweaks
+
+Used mainly to speed up UI development and ensure a clean, modern design with minimal setup.
+
+## Offline Mode implemettation
+The following approaches were used to implement Offline Mode:
+
+1. Network connectivity detection
+To check internet connectivity, the [@react-native-community/netinfo](https://www.npmjs.com/package/@react-native-community/netinfo) library was used.
+Its main purpose is to detect whether the network is available.
+For convenience, a custom hook was created that can be called in a component to retrieve network status and use it for conditional rendering.
+
+2. Data caching in local storage
+To store currency rates and favorite items locally, the [@react-native-async-storage/async-storage](https://www.npmjs.com/package/@react-native-async-storage/async-storage) library was used.
+
+After currency rates are fetched from the API, they are saved to AsyncStorage under the ```@rates``` key. This allows the app to display cached data on the next launch if there is no network connection.
+
+The list of favorite currencies stored under the ```@favorites``` key is also saved in AsyncStorage, which allows users to access their favorites even when offline.
+
+## Testing
+
+- Powered by **Jest**
+- Unit tests for components, hooks, and stores
+- Run tests with:
+  ```bash
+  npm test
