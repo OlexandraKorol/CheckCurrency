@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchExchangeRates } from '../api/fixerApi';
 
 type Rate = [string, number];
+const RATES_KEY = 'rates';
 
 type Store = {
   rates: Rate[];
@@ -25,9 +26,9 @@ export const useExchangeRates = create<Store>((set) => ({
       const ratesArray: Rate[] = Object.entries(data.data.rates);
       
       set({ rates: ratesArray, loading: false, baseCurency: data.data.base });
-      await AsyncStorage.setItem('@rates', JSON.stringify(ratesArray));
+      await AsyncStorage.setItem('RATES_KEY', JSON.stringify(ratesArray));
     } catch (err) {
-      const cached = await AsyncStorage.getItem('@rates');
+      const cached = await AsyncStorage.getItem(RATES_KEY);
       if (cached) {
         set({ rates: JSON.parse(cached), loading: false });
       } else {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FlatList, StatusBar, StyleSheet, View } from "react-native"
-import { Icon, MD3Colors, Text } from 'react-native-paper';
+import { Icon, MD3Colors } from 'react-native-paper';
 import { CurrencyListItem } from "../components/CurrencyListItem";
 
 import { useExchangeRates } from "../store/exchangeRates";
@@ -27,7 +27,6 @@ export const AllRatesScreen = () => {
   const { rates, loading, fetchRates, baseCurency } = useExchangeRates();
   const { toggleFavorite, isFavorite } = useFavorites();
   const { isConnected } = useNetwork();
-
   const [search, setSearch] = useState('');
 
   useEffect(() => {
@@ -39,7 +38,7 @@ export const AllRatesScreen = () => {
   );
 
   if (loading) return <LoadingComponent />;
-  //TODO: NOTHING FOUND COMPONENT
+
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -49,6 +48,7 @@ export const AllRatesScreen = () => {
             value={search}
             onChangeText={setSearch} />
           <FlatList
+            testID="currency-list"
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={<BaseCurrency baseCurency={baseCurency} />}
             data={filteredRates}
@@ -64,7 +64,6 @@ export const AllRatesScreen = () => {
         </>
       )
         : (<NoInternetMessage />)}
-
     </View>
   )
 }

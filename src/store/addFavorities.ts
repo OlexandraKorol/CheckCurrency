@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const FAVORITES_KEY = '@favorites';
+const FAVORITES_KEY = 'favorites';
 
 type Store = {
   favorites: string[];

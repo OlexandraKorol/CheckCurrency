@@ -71,7 +71,7 @@ This mobile app provides up-to-date currency exchange rates, lets users save fav
 2. **AllRatesScreen (All currencies)**
 
    This screen shows the complete list of exchange rates fetched from the API.
-   A search field allows filtering currencies by code or name.
+   A search field allows filtering currencies by code.
 
 3. **FavoritesCurrency Screen (Favorite)**
 
@@ -83,7 +83,7 @@ This mobile app provides up-to-date currency exchange rates, lets users save fav
 
 5. **Offline mode**
    Exchange rates and favorites are cached locally using AsyncStorage.
-   When there is no internet connection, the app displays the last loaded rates and favorite currencies.
+   When there is no internet connection, the app displays favorite currencies.
 
 ## Tecnologies and Libraries
 
@@ -99,7 +99,7 @@ Library to monitor network connectivity. Used to detect online/offline mode and 
 
 ## Architecture and structure 
 
-![project structure](./src/assets/image.png)
+![project structure](./src/assets/image_for_readme.png)
 
 ### Navigation
 
@@ -148,12 +148,12 @@ To store currency rates and favorite items locally, the [@react-native-async-sto
 
 After currency rates are fetched from the API, they are saved to AsyncStorage under the ```@rates``` key. This allows the app to display cached data on the next launch if there is no network connection.
 
-The list of favorite currencies stored under the ```@favorites``` key is also saved in AsyncStorage, which allows users to access their favorites even when offline.
+The list of favorite currencies stored under the ```favorites``` key is also saved in AsyncStorage, which allows users to access their favorites even when offline.
 
 ## Testing
 
-- Powered by **Jest**
-- Unit tests for components, hooks, and stores
+- Using [React Native Testing Library](https://www.npmjs.com/package/@testing-library/react-native) for testing 
+- Unit tests for main UI logic and interactive components
 - Run tests with:
   ```bash
   npm test

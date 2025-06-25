@@ -22,7 +22,7 @@ export const CurrencyListItem: FC<ICurrencyListItem> = ({ isFavorite, code, valu
     />
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} testID="curency-list-item">
       <View style={styles.container}>
         <Text variant="bodyLarge">{code}: {value}</Text>
         <Text variant="titleSmall">{favoriteIcon}</Text>

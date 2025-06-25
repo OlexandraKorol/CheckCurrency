@@ -8,6 +8,7 @@ interface ICustomInput {
 export const CustomInput:React.FC<ICustomInput> = ({value, onChangeText}) => {
   return (
     <TextInput
+      testID="custom-input"
       mode="outlined"
       placeholder="Type to find currency.."
       value={value}

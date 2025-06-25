@@ -36,7 +36,6 @@ export const FavoritesScreen = () => {
 
   return (
     <View style={styles.container}>
-
       <FlatList
         data={favoriteRates}
         keyExtractor={([code]) => code}

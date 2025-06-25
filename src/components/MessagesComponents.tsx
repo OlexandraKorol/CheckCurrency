@@ -7,7 +7,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 export const BaseCurrency = ({ baseCurency }: { baseCurency: string }) => {
   return (
-    <View style={styles.headerComponent}>
+    <View style={styles.headerComponent} testID="base-currency">
       {baseCurency && (<Text variant="headlineSmall">Base Currency: </Text>)}
       <Text variant="headlineSmall">{baseCurency}</Text>
     </View>
@@ -58,7 +58,7 @@ export const NoInternetMessage = () => {
       />
 
       <Text style={styles.noInternetMessage} variant="bodyLarge">
-        But you can still view your saved currencies in the tab!
+        But you can still view your saved currencies in the next tab!
       </Text>
 
       <TouchableOpacity onPress={() => navigation.navigate('Favorites')}>
